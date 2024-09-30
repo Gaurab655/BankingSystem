@@ -120,6 +120,8 @@ public class AccountManager {
                 if (resultSet.next()) {
                     double balance = resultSet.getDouble("balance");
                     if (balance >= amount) {
+                        int serviceCharge = (receiver_account_number%2==0)?5:10;
+                        double totalDebit =amount+serviceCharge;
                         String creditQuery = "update accounts set balance =balance+? where account_number=?";
                         String debitQuery = "update accounts set balance =balance-? where account_number=?";
                         try {
@@ -127,7 +129,7 @@ public class AccountManager {
                             PreparedStatement debitPreparedStatement = connection.prepareStatement(debitQuery);
                             creditPreparedStatement.setDouble(1, amount);
                             creditPreparedStatement.setLong(2, receiver_account_number);
-                            debitPreparedStatement.setDouble(1, amount);
+                            debitPreparedStatement.setDouble(1, totalDebit);
                             debitPreparedStatement.setLong(2, senders_account_number);
 
                             int rowsAffected1 = debitPreparedStatement.executeUpdate();
@@ -135,6 +137,7 @@ public class AccountManager {
 
                             if (rowsAffected1 > 0 && rowsAffected2 > 0) {
                                 System.out.println(amount + " amount transferred successful!! ");
+                                System.out.println("service charge - "+serviceCharge);
                                 connection.commit();
                                 connection.setAutoCommit(true);
                                 return;
