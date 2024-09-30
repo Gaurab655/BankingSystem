@@ -9,7 +9,7 @@ public class App {
     private static final String url = "jdbc:postgresql://localhost:5432/bv2";
     private static final String username = "postgres";
     private static final String password = "password";
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         try {
@@ -99,7 +99,7 @@ public class App {
                                     accountManager.credit_amount(account_number);
                                     break;
                                 case 3:
-
+                                    accountManager.transferMoney(account_number);
                                     break;
                                 case 4:
                                     break;
