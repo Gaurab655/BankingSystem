@@ -35,7 +35,7 @@ public class App {
             System.out.println("Database connection error: " + e.getMessage());
         }
     }
-    private static void mainMenu(User user , Accounts accounts,AccountManager accountManager) throws SQLException {
+    public static void mainMenu(User user , Accounts accounts,AccountManager accountManager) throws SQLException {
         String email;
         int account_number;
         while (true) {
@@ -102,8 +102,12 @@ public class App {
                                     accountManager.transferMoney(account_number);
                                     break;
                                 case 4:
+                                    accountManager.checkBalance(account_number);
                                     break;
                                 case 5:
+                                    System.out.println("logging out.....!!");
+                                    accountManager.logOut(user,accounts,accountManager);
+
                                     break;
                             }
 

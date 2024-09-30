@@ -12,6 +12,7 @@ public class AccountManager {
         this.connection = connection;
         this.scanner = scanner;
     }
+    App app = new App();
 
     public void debit_amount(long account_number) throws SQLException {
         System.out.println();
@@ -164,6 +165,32 @@ public class AccountManager {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+    public void checkBalance(long account_number){
+        System.out.println("Enter pin : ");
+        String pin = scanner.next();
+        String query = "select * from accounts where account_number= ? and security_pin=?";
+       try {
+           PreparedStatement preparedStatement = connection.prepareStatement(query);
+           preparedStatement.setLong(1,account_number);
+           preparedStatement.setString(2,pin);
+           ResultSet resultSet = preparedStatement.executeQuery();
+           if (resultSet.next()){
+               double balance = resultSet.getDouble("balance");
+               System.out.println("your total amount is : " +balance);
+           }else {
+               System.out.println("Error fetching balance!");
+           }
+
+       }catch (SQLException e){
+           e.printStackTrace();
+       }
+
+    }
+    public void logOut(User user, Accounts accounts, AccountManager accountManager) throws SQLException{
+        System.out.println("logged out successfully!!");
+        App.mainMenu(user,accounts,accountManager);
+
     }
 
 }
