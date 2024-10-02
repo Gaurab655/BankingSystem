@@ -16,7 +16,7 @@ public class User {
 
     public void register_user(){
 
-        String name = App.getFullName();
+        String fullName = App.getFullName();
         String email = App.getEmail();
         String password = App.getPassword();
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
@@ -26,7 +26,7 @@ public class User {
         try {
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1,name);
+            preparedStatement.setString(1,fullName);
             preparedStatement.setString(2,email);
             preparedStatement.setString(3,hashedPassword);
             int rowsAffected = preparedStatement.executeUpdate();

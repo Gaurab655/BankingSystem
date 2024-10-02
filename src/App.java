@@ -125,18 +125,20 @@ public class App {
     }
 
     public static String getFullName() {
-        String fullname;
+        scanner.nextLine();
+        String fullName;
         while (true) {
-            System.out.println("Enter full name: ");
-            fullname = scanner.nextLine();
+            System.out.print("Enter full name: ");
+            fullName = scanner.next().trim();
 
-            if (fullname == null) {
-                System.out.println("Please enter full name:");
+            if (fullName.isEmpty()) {
+                System.out.println("Please enter a valid full name:");
             } else {
-                return fullname;
+                return fullName;
             }
         }
     }
+
 
     public static Double getBalance() {
         Double balance ;

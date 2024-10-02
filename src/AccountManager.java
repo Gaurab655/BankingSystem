@@ -106,11 +106,12 @@ public class AccountManager {
                 preparedStatement.setDouble(1, senders_account_number);
                 preparedStatement.setString(2, pin);
                 ResultSet resultSet = preparedStatement.executeQuery();
+                int serviceCharge = (receiver_account_number%2==0)?5:10;
+                double totalDebit =amount+serviceCharge;
                 if (resultSet.next()) {
                     double balance = resultSet.getDouble("balance");
-                    if (balance >= amount) {
-                        int serviceCharge = (receiver_account_number%2==0)?5:10;
-                        double totalDebit =amount+serviceCharge;
+                    if (balance >= totalDebit) {
+
                         String creditQuery = "update accounts set balance =balance+? where account_number=?";
                         String debitQuery = "update accounts set balance =balance-? where account_number=?";
                         try {

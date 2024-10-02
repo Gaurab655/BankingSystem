@@ -15,11 +15,10 @@ public class Accounts {
 
     public int open_Account(String email) {
         if (!account_exists(email)) {
-            scanner.nextLine();
             String query = "INSERT INTO accounts (full_name, email, balance, security_pin) VALUES (?, ?, ?, ?)";
-            String fullName=App.getFullName();
-            Double balance = App.getBalance();
-            String pin=App.getPin();
+            String fullName = App.getFullName();
+            Double balance  = App.getBalance();
+            String pin      = App.getPin();
 
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
