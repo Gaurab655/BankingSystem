@@ -54,22 +54,24 @@ public class Accounts {
         throw new RuntimeException("Account already exists");
     }
 
-    public int getAccountNumber(String  email){
-        String query = "select * from accounts where email = ?";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1,email);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()){
-                return resultSet.getInt("account_number");
+    public int getAccountNumber(String email) {
+        String query = "SELECT account_number FROM accounts WHERE email = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, email);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("account_number");
+                } else {
+                    throw new RuntimeException("Account doesn't exist");
+                }
             }
-        }catch (SQLException e){
-        e.printStackTrace();
-
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Database error occurred", e);
         }
-        throw new RuntimeException("Account doesn't exists");
-
     }
+
     public boolean account_exists(String email) {
         String query = "select * from accounts where email=?";
         try {

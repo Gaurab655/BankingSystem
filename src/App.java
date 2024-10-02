@@ -73,11 +73,22 @@ public class App {
                                 System.out.println("Account successfully created !!");
                                 System.out.println("your account number is :" +account_number);
                             }
-                            else if (choice2==2) {
-                                accounts.getAccountNumber(email);
+                            else if (choice2 == 2) {
+                                try {
+                                    int accountNumber = accounts.getAccountNumber(email);
+                                    System.out.println("Account number: " + accountNumber);
+                                    mainMenu(user , accounts,accountManager);
+                                } catch (RuntimeException e) {
+                                    System.out.println(e.getMessage());
+                                    mainMenu(user , accounts,accountManager);
+
+
+                                }
                             } else {
                                 break;
                             }
+
+
                         }
                         account_number=accounts.getAccountNumber(email);
                         int choice2=0;
