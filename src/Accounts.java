@@ -15,15 +15,43 @@ public class Accounts {
 
     public int open_Account(String email) {
         if (!account_exists(email)) {
-            scanner.nextLine(); // Clear the scanner buffer
+            scanner.nextLine();
+            String pin = null;
+            String fullname=null;
+            Double balance=null;
             String query = "INSERT INTO accounts (full_name, email, balance, security_pin) VALUES (?, ?, ?, ?)";
-            System.out.println("Enter full name ");
-            String fullname = scanner.nextLine();
-            System.out.println("Enter balance ");
-            double balance = scanner.nextDouble();
-            scanner.nextLine(); // Clear buffer
-            System.out.println("Enter pin ");
-            String pin = scanner.nextLine();
+
+            while (true){
+                System.out.println("Enter full name ");
+                 fullname = scanner.nextLine();
+                if (fullname==null||fullname.isEmpty()){
+                    System.out.println("please enter full name");
+                }else {
+                    break;
+                }
+            }
+            while (true){
+                System.out.println("Enter balance ");
+                balance = scanner.nextDouble();
+                if (balance==null){
+                    System.out.println("please Enter balance");
+                }else {
+                    break;
+                }
+            }
+
+            scanner.nextLine();
+            while (true){
+                System.out.println("Enter 4 character pin ");
+                 pin = scanner.nextLine();
+                 if (pin.isEmpty()||pin.length()>4){
+                     System.out.println("Please enter valid pin");
+                 }else {
+                     break;
+                 }
+            }
+
+
 
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -35,10 +63,10 @@ public class Accounts {
                 int affectedRows = preparedStatement.executeUpdate();
 
                 if (affectedRows > 0) {
+                    // getGeneratedKeys retrieve the auto-generated keys (such as primary key values) when inserting data into a database
                     ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
                     if (generatedKeys.next()) {
                         int accountNumber = generatedKeys.getInt(1);
-                        System.out.println("Account created successfully with account number: " + accountNumber);
                         return accountNumber;
                     } else {
                         System.out.println("Error: No account number was generated.");

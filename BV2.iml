@@ -16,5 +16,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" exported="" name="jBCrypt-0.4" level="project" />
   </component>
 </module>
