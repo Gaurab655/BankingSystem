@@ -15,12 +15,8 @@ public class AccountManager {
     App app = new App();
 
     public void debit_amount(long account_number) throws SQLException {
-        System.out.println();
-        System.out.println("Enter amount : ");
-        long amount = scanner.nextLong();
-        scanner.nextLine();
-        System.out.println("Enter pin : ");
-        String pin = scanner.nextLine();
+        double amount=App.getBalance();
+        String pin = App.getPin();
         try {
             connection.setAutoCommit(false);
             String query = "Select * from accounts where security_pin=?";
@@ -59,12 +55,8 @@ public class AccountManager {
     }
 
     public void credit_amount(long account_number) throws SQLException {
-        scanner.nextLine();
-        System.out.println("Enter amount : ");
-        double amount = scanner.nextDouble();
-        scanner.nextLine();
-        System.out.println("Enter pin ");
-        String pin = scanner.nextLine();
+        double amount = App.getBalance();
+        String pin = App.getPin();
         try {
             if (account_number != 0) {
                 connection.setAutoCommit(false);
@@ -101,14 +93,10 @@ public class AccountManager {
     }
 
     public void transferMoney(long senders_account_number) throws SQLException {
-        scanner.nextLine();
         System.out.println("Enter account number to transfer : ");
         long receiver_account_number = scanner.nextLong();
-        System.out.println("Enter amount : ");
-        double amount = scanner.nextDouble();
-        scanner.nextLine();
-        System.out.println("Enter security pin");
-        String pin = scanner.nextLine();
+        double amount = App.getBalance();
+        String pin = App.getPin();
 
         String query = "select * from accounts where account_number = ? and security_pin = ?";
         try {
@@ -167,8 +155,7 @@ public class AccountManager {
         }
     }
     public void checkBalance(long account_number){
-        System.out.println("Enter pin : ");
-        String pin = scanner.next();
+        String pin =App.getPin();
         String query = "select * from accounts where account_number= ? and security_pin=?";
        try {
            PreparedStatement preparedStatement = connection.prepareStatement(query);

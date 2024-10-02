@@ -15,41 +15,10 @@ public class User {
     }
 
     public void register_user(){
-        scanner.nextLine();
 
-        String name = null;
-        String email = null;
-        String password = null;
-        while (true) {
-            System.out.println("Enter name: ");
-            name = scanner.nextLine();
-            if (name == null || name.isEmpty()) {
-                System.out.println("Please enter a valid name.");
-            } else {
-                break;
-            }
-        }
-        while (true) {
-            System.out.println("Enter email: ");
-            email = scanner.nextLine();
-            if (email == null || email.isEmpty()) {
-                System.out.println("Please enter a valid email.");
-            } else if (user_exists(email)) {
-                System.out.println("User already exists for this email!!");
-            } else {
-                break;
-            }
-        }
-
-        while (true) {
-            System.out.println("Enter password: ");
-            password = scanner.nextLine();
-            if (password == null || password.isEmpty()) {
-                System.out.println("Please enter a valid password.");
-            } else {
-                break;
-            }
-        }
+        String name = App.getFullName();
+        String email = App.getEmail();
+        String password = App.getPassword();
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
 
@@ -74,11 +43,8 @@ public class User {
 
     //String is used so that we can return email through the program.
     public String login_user(){
-        scanner.nextLine();
-        System.out.println("Enter your email : ");
-        String email = scanner.nextLine();
-        System.out.println("Enter password : ");
-        String password = scanner.nextLine();
+        String email = App.getEmail();
+        String password = App.getPassword();
 
         String query = "select * from users where email = ? ";
 

@@ -49,10 +49,8 @@ public class App {
                 choose = scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a number." + e.getMessage());
-                scanner.nextLine();
                 continue;
             }
-
             switch (choose) {
                 case 1:
                     user.register_user();
@@ -129,44 +127,65 @@ public class App {
     public static String getFullName() {
         String fullname;
         while (true) {
-            System.out.print("Enter full name: ");
+            System.out.println("Enter full name: ");
             fullname = scanner.nextLine();
-            if (fullname == null || fullname.isEmpty()) {
-                System.out.println("Please enter full name.");
+
+            if (fullname == null) {
+                System.out.println("Please enter full name:");
             } else {
                 return fullname;
             }
         }
     }
 
-    // Method to get balance
     public static Double getBalance() {
-        Double balance = null;
+        Double balance ;
         while (true) {
             System.out.print("Enter balance: ");
-            try {
-                balance = Double.parseDouble(scanner.nextLine());
-                if (balance < 0) { // Optional: Check for negative balance
-                    System.out.println("Please enter a valid balance (must be non-negative).");
-                } else {
-                    return balance;
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Please enter a valid number for balance.");
+            balance=scanner.nextDouble();
+            if (balance==null){
+                System.out.println("Please enter balance");
+            }else {
+               return balance;
             }
         }
     }
 
-    // Method to get a 4-character PIN
     public static String getPin() {
         String pin;
         while (true) {
-            System.out.print("Enter 4-character PIN: ");
+            scanner.nextLine();
+            System.out.print("Enter  pin: ");
             pin = scanner.nextLine();
-            if (pin.isEmpty() || pin.length() != 4) {
+            if (pin.length()!=4) {
                 System.out.println("Please enter a valid PIN (exactly 4 characters).");
             } else {
                 return pin;
+            }
+        }
+    }
+    public static String getEmail() {
+        String email;
+        while (true) {
+            scanner.nextLine();
+            System.out.print("Enter email: ");
+            email = scanner.nextLine().trim();
+            if (email.isEmpty()) {
+                System.out.println("Please enter valid email");
+            } else {
+                return email;
+            }
+        }
+    }
+    public static String getPassword(){
+        String password;
+        while (true){
+            System.out.print("Enter password : ");
+            password=scanner.nextLine();
+            if (password.isEmpty()||password==null){
+                System.out.println("Please enter valid password");
+            }else {
+                return password;
             }
         }
     }

@@ -16,46 +16,14 @@ public class Accounts {
     public int open_Account(String email) {
         if (!account_exists(email)) {
             scanner.nextLine();
-            String pin = null;
-            String fullname=null;
-            Double balance=null;
             String query = "INSERT INTO accounts (full_name, email, balance, security_pin) VALUES (?, ?, ?, ?)";
-
-            while (true){
-                System.out.println("Enter full name ");
-                 fullname = scanner.nextLine();
-                if (fullname==null||fullname.isEmpty()){
-                    System.out.println("please enter full name");
-                }else {
-                    break;
-                }
-            }
-            while (true){
-                System.out.println("Enter balance ");
-                balance = scanner.nextDouble();
-                if (balance==null){
-                    System.out.println("please Enter balance");
-                }else {
-                    break;
-                }
-            }
-
-            scanner.nextLine();
-            while (true){
-                System.out.println("Enter 4 character pin ");
-                 pin = scanner.nextLine();
-                 if (pin.isEmpty()||pin.length()>4){
-                     System.out.println("Please enter valid pin");
-                 }else {
-                     break;
-                 }
-            }
-
-
+            String fullName=App.getFullName();
+            Double balance = App.getBalance();
+            String pin=App.getPin();
 
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-                preparedStatement.setString(1, fullname);
+                preparedStatement.setString(1,fullName );
                 preparedStatement.setString(2, email);
                 preparedStatement.setDouble(3, balance);
                 preparedStatement.setString(4, pin);
